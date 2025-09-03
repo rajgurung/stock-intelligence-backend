@@ -150,8 +150,17 @@ func (h *StockHandler) GetDataSourceInfo(c *gin.Context) {
 // GetStockHistoricalPerformance returns historical performance data for a specific stock
 func (h *StockHandler) GetStockHistoricalPerformance(c *gin.Context) {
 	symbol := c.Param("symbol")
+	daysParam := c.Query("days")
 	
-	performance := h.stockService.GetHistoricalPerformance(symbol)
+	// Parse days parameter, default to 30 if not provided or invalid
+	days := 30
+	if daysParam != "" {
+		if parsedDays, err := strconv.Atoi(daysParam); err == nil && parsedDays > 0 {
+			days = parsedDays
+		}
+	}
+	
+	performance := h.stockService.GetHistoricalPerformance(symbol, days)
 	if performance == nil {
 		c.JSON(http.StatusNotFound, gin.H{
 			"success": false,

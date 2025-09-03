@@ -160,31 +160,8 @@ func (h *HybridStockService) GetDataSource() map[string]interface{} {
 }
 
 // GetHistoricalPerformance returns historical performance data for a stock symbol
-func (h *HybridStockService) GetHistoricalPerformance(symbol string) *models.HistoricalPerformance {
-	// For now, return realistic fallback data
-	// In the future, this could fetch real historical data from database
-	performanceData := map[string]models.HistoricalPerformance{
-		"AAPL": {Symbol: "AAPL", OneDay: 1.24, FiveDay: -2.15, OneMonth: 8.7, SixMonth: 15.2, YTD: 22.1, OneYear: 45.3, FiveYear: 125.8, Max: 450.2},
-		"MSFT": {Symbol: "MSFT", OneDay: -0.67, FiveDay: 3.2, OneMonth: 12.4, SixMonth: 18.9, YTD: 28.5, OneYear: 52.7, FiveYear: 145.3, Max: 380.6},
-		"GOOGL": {Symbol: "GOOGL", OneDay: 2.15, FiveDay: -1.8, OneMonth: 6.9, SixMonth: 12.3, YTD: 18.7, OneYear: 35.2, FiveYear: 89.4, Max: 290.1},
-		"NFLX": {Symbol: "NFLX", OneDay: 0.34, FiveDay: 2.7, OneMonth: -5.1, SixMonth: 22.3, YTD: 35.8, OneYear: 45.2, FiveYear: 67.9, Max: 180.4},
-	}
-
-	if performance, exists := performanceData[symbol]; exists {
-		return &performance
-	}
-
-	// Default fallback performance for unknown symbols
-	return &models.HistoricalPerformance{
-		Symbol:    symbol,
-		OneDay:    0.5,
-		FiveDay:   -1.2,
-		OneMonth:  3.8,
-		SixMonth:  8.4,
-		YTD:       12.6,
-		OneYear:   18.9,
-		FiveYear:  45.2,
-		Max:       125.8,
-	}
+func (h *HybridStockService) GetHistoricalPerformance(symbol string, days int) *models.HistoricalPerformance {
+	return nil // No historical data available - database-only mode uses real data through handlers
 }
+
 
